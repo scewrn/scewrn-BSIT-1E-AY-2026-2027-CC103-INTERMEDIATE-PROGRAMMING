@@ -1,0 +1,42 @@
+#MAIN MENU
+#PROGRAM ENTRY POINT
+#CODE PROPER
+def main():
+    print("=" *70)
+    print("WELCOME TO THE MATH AND RANDOM MODULE MINT SYSTEM")
+    print("A learning tool for Phyton's 'math' and 'random'module")
+    print("=" *70)
+    while True:
+        print("""
+MAIN MENU
+    1. Trigonometric (circular) funcions   - sins, cos, tan, pi, radians...
+    2. Hyperbolic functions                - sihn, cosh, tahn, asinh...
+    3. Exponential & logarithmic functions - e, exp, log, log10, log2, pow
+    4. General-purpose math functions      - ceil, floor, trunc, factorial, hypot
+    5. Random module                       - seed, randrange, radint, choice, sample
+    0. Exit program
+""")
+        choice = safe_input("Enter your choice(0-5);").strip()
+        if choice == "1":
+            trig_menu()
+        elif choice == "2":
+            hyperbolic_menu()
+        elif choice == "3":
+            exponent_menu()
+        elif choice == "4":
+            general_menu()
+        elif choice == "5":
+            random_menu()
+        elif choice == "0":
+            print("\nThank you for exploring the math and random modules. " "Goodbye!")
+            break
+        else:
+            print("\nInvalid choice. Please enter a number from 0 to 5. ")
+            
+        if_name_=="_main";
+        try:
+            main()
+        except KeybpadInterrupt:
+            print("\n\nProgram,interrupted by user. Goodbye!")
+        except SystemExit:
+            pass

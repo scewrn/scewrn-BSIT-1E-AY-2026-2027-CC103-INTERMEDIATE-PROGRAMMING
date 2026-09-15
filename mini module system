@@ -1,3 +1,41 @@
+import math
+import random
+import sys
+
+
+# ---------- HELPER FUNCTIONS ----------
+
+def safe_input(prompt):
+    """Get input from the user in a way that won't crash the program."""
+    try:
+        return input(prompt)
+    except (KeyboardInterrupt, EOFError):
+        print("\nInput cancelled. Exiting program.")
+        sys.exit()
+
+
+def get_float(prompt):
+    """Keep asking until the user enters a valid number."""
+    while True:
+        value = safe_input(prompt).strip()
+        try:
+            return float(value)
+        except ValueError:
+            print("  Invalid input. Please enter a numeric value.")
+
+
+def print_header(title):
+    """Print a formatted section header."""
+    print("\n" + "=" * 70)
+    print(title)
+    print("=" * 70)
+
+
+def pause():
+    """Pause so the user can read the output before returning to the menu."""
+    safe_input("\nPress Enter to continue...")
+
+
 #MAIN MENU
 #PROGRAM ENTRY POINT
 #CODE PROPER
@@ -9,14 +47,14 @@ def main():
     while True:
         print("""
 MAIN MENU
-    1. Trigonometric (circular) funcions   - sins, cos, tan, pi, radians...
-    2. Hyperbolic functions                - sihn, cosh, tahn, asinh...
-    3. Exponential & logarithmic functions - e, exp, log, log10, log2, pow
-    4. General-purpose math functions      - ceil, floor, trunc, factorial, hypot
-    5. Random module                       - seed, randrange, radint, choice, sample
+    1. Trigonometric (circular) funcions        - sins, cos, tan, pi, radians...
+    2. Hyperbolic functions                     - sihn, cosh, tahn, asinh...
+    3. Exponential & logarithmic functions      - e, exp, log, log10, log2, pow
+    4. General-purpose math functions           - ceil, floor, trunc, factorial, hypot
+    5. Random module                            - seed, randrange, radint, choice, sample
     0. Exit program
 """)
-        choice = safe_input("Enter your choice(0-5);").strip()
+        choice = safe_input("Enter your choice(0-5):").strip()
         if choice == "1":
             trig_menu()
         elif choice == "2":
@@ -32,11 +70,237 @@ MAIN MENU
             break
         else:
             print("\nInvalid choice. Please enter a number from 0 to 5. ")
-            
-        if_name_=="_main";
+
+
+# SECTION 1: TRIGONOMETRIC (CIRCULAR) FUNCTIONS
+def trig_menu():
+    print_header("TRIGONOMETRIC (CIRCULAR) FUNCTIONS")
+    print("""
+1. sin(x)
+2. cos(x)
+3. tan(x)
+4. Convert degrees <-> radians
+0. Back to Main Menu
+""")
+
+    choice = safe_input("Enter your choice: ").strip()
+
+    if choice == "1":
+        deg = get_float("Enter angle in degrees: ")
+        print(f"\n  sin({deg}) = {math.sin(math.radians(deg))}")
+
+    elif choice == "2":
+        deg = get_float("Enter angle in degrees: ")
+        print(f"\n  cos({deg}) = {math.cos(math.radians(deg))}")
+
+    elif choice == "3":
+        deg = get_float("Enter angle in degrees: ")
+        print(f"\n  tan({deg}) = {math.tan(math.radians(deg))}")
+
+    elif choice == "4":
+        deg = get_float("Enter a value in degrees: ")
+        print(f"\n  {deg} degrees = {math.radians(deg)} radians")
+        rad = get_float("Enter a value in radians: ")
+        print(f"  {rad} radians = {math.degrees(rad)} degrees")
+
+    elif choice == "0":
+        return
+
+    else:
+        print("\nInvalid choice. Please try again.")
+
+    pause()
+
+
+# SECTION 2: HYPERBOLIC FUNCTIONS
+def hyperbolic_menu():
+    print_header("HYPERBOLIC FUNCTIONS")
+    print("""
+1. sinh(x)
+2. cosh(x)
+3. tanh(x)
+4. asinh(x)
+0. Back to Main Menu
+""")
+
+    choice = safe_input("Enter your choice: ").strip()
+
+    if choice == "1":
+        x = get_float("Enter x: ")
+        print(f"\n  sinh({x}) = {math.sinh(x)}")
+
+    elif choice == "2":
+        x = get_float("Enter x: ")
+        print(f"\n  cosh({x}) = {math.cosh(x)}")
+
+    elif choice == "3":
+        x = get_float("Enter x: ")
+        print(f"\n  tanh({x}) = {math.tanh(x)}")
+
+    elif choice == "4":
+        x = get_float("Enter x: ")
+        print(f"\n  asinh({x}) = {math.asinh(x)}")
+
+    elif choice == "0":
+        return
+
+    else:
+        print("\nInvalid choice. Please try again.")
+
+    pause()
+
+
+# SECTION 3: EXPONENTIAL & LOGARITHMIC FUNCTIONS
+def exponent_menu():
+    print_header("EXPONENTIAL & LOGARITHMIC FUNCTIONS")
+    print("""
+1. Show Euler's number (e)
+2. exp(x)
+3. log(x), log10(x), log2(x)
+4. log(x, base)
+5. pow(x, y)
+0. Back to Main Menu
+""")
+
+    choice = safe_input("Enter your choice: ").strip()
+
+    if choice == "1":
+        print(f"\n  math.e = {math.e}")
+
+    elif choice == "2":
+        x = get_float("Enter x: ")
+        print(f"\nexp({x}) = e^{x} = {math.exp(x)}")
+
+    elif choice == "3":
+        x = get_float("Enter a positive number x: ")
         try:
-            main()
-        except KeybpadInterrupt:
-            print("\n\nProgram,interrupted by user. Goodbye!")
-        except SystemExit:
-            pass
+            print(f"\n  log({x})    = {math.log(x)} (natural log, base e)")
+            print(f"  log10({x})  = {math.log10(x)}")
+            print(f"  log2({x})   = {math.log2(x)}")
+        except ValueError:
+            print("  Logarithms require x > 0. Please try again.")
+
+    elif choice == "4":
+        x = get_float("Enter x (must be > 0): ")
+        b = get_float("Enter the base b (must be > 0 and != 1): ")
+        try:
+            print(f"\nlog({x}, base={b}) = {math.log(x, b)}")
+        except (ValueError, ZeroDivisionError):
+            print("  Invalid input for a logarithm with that base.")
+
+    elif choice == "5":
+        x = get_float("Enter the base x: ")
+        y = get_float("Enter the exponent y: ")
+        print(f"\n  Built-in pow({x}, {y}) = {pow(x, y)}")
+        print(f"  math.pow({x}, {y})     = {math.pow(x, y)}")
+        print("  (Note: pow() can return an int for integer inputs; "
+              "math.pow() always returns a float.)")
+
+    elif choice == "0":
+        return
+
+    else:
+        print("\nInvalid choice. Please try again.")
+
+    pause()
+
+
+# SECTION 4: GENERAL-PURPOSE MATH FUNCTIONS
+def general_menu():
+    print_header("GENERAL-PURPOSE MATH FUNCTIONS")
+    print("""
+1. Compute ceil, floor, and trunc of a value
+2. Compute a factorial
+3. Compute the hypotenuse of a right triangle
+0. Back to Main Menu
+""")
+
+    choice = safe_input("Enter your choice: ").strip()
+
+    if choice == "1":
+        x = get_float("Enter a decimal number x: ")
+        print(f"\n  ceil({x})  = {math.ceil(x)}")
+        print(f"  floor({x}) = {math.floor(x)}")
+        print(f"  trunc({x}) = {math.trunc(x)}")
+
+    elif choice == "2":
+        n = get_float("Enter a non-negative whole number n: ")
+        try:
+            print(f"\n  factorial({int(n)}) = {math.factorial(int(n))}")
+        except ValueError:
+            print("  factorial() requires a non-negative integer.")
+
+    elif choice == "3":
+        x = get_float("Enter the first leg x: ")
+        y = get_float("Enter the second leg y: ")
+        print(f"\n  hypot({x}, {y}) = {math.hypot(x, y)}")
+
+    elif choice == "0":
+        return
+
+    else:
+        print("\nInvalid choice. Please try again.")
+
+    pause()
+
+
+# SECTION 5: RANDOM MODULE
+def random_menu():
+    print_header("RANDOM MODULE")
+    print("""
+1. seed(n)
+2. randrange(start, stop)
+3. randint(a, b)
+4. choice([items])
+5. sample([items], k)
+0. Back to Main Menu
+""")
+
+    choice = safe_input("Enter your choice: ").strip()
+
+    if choice == "1":
+        n = get_float("Enter a seed value: ")
+        random.seed(n)
+        print(f"\n  Random seed set to {n}.")
+
+    elif choice == "2":
+        start = int(get_float("Enter start: "))
+        stop = int(get_float("Enter stop: "))
+        try:
+            print(f"\n  randrange({start}, {stop}) = {random.randrange(start, stop)}")
+        except ValueError:
+            print("  Invalid range.")
+
+    elif choice == "3":
+        a = int(get_float("Enter a: "))
+        b = int(get_float("Enter b: "))
+        print(f"\n  randint({a}, {b}) = {random.randint(a, b)}")
+
+    elif choice == "4":
+        items = [item.strip() for item in safe_input("Enter items separated by commas: ").split(",")]
+        print(f"\n  choice({items}) = {random.choice(items)}")
+
+    elif choice == "5":
+        items = [item.strip() for item in safe_input("Enter items separated by commas: ").split(",")]
+        k = int(get_float("How many to sample? "))
+        try:
+            print(f"\n  sample({items}, {k}) = {random.sample(items, k)}")
+        except ValueError:
+            print("  Sample size can't be larger than the population.")
+
+    elif choice == "0":
+        return
+
+    else:
+        print("\nInvalid choice. Please try again.")
+
+    pause()
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\n\nProgram interrupted by user. Goodbye!")
+    except SystemExit:
+        pass
